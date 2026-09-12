@@ -1,0 +1,151 @@
+---
+import GithubLogo from "@phosphor-icons/core/assets/regular/github-logo.svg?raw";
+import ArrowUpRight from "@phosphor-icons/core/assets/regular/arrow-up-right.svg?raw";
+
+interface Project {
+  id: string;
+  name: string;
+  meta: string;
+  description: string;
+  file?: string;
+  link: string;
+}
+
+interface Props {
+  title: string;
+  viewSource: string;
+  items: Project[];
+}
+
+const { title, viewSource, items } = Astro.props;
+
+const biovity = items.find((p) => p.id === "biovity")!;
+const fasty = items.find((p) => p.id === "fasty")!;
+const portmanager = items.find((p) => p.id === "portmanager")!;
+const churn = items.find((p) => p.id === "churn")!;
+
+const biovityCode = [
+  'export async function GET(request: NextRequest) {',
+  '  const session = await auth.api.getSession({ headers: request.headers })',
+  '  if (!isAdminSession(session)) {',
+  '    return NextResponse.json({ error: "No autorizado" }, { status: 403 })',
+  '  }',
+  '',
+  '  const result = await fetchJson<unknown>(`${API_BASE}/api/v1/admin/stats`, {',
+  '    next: { revalidate: 60 },',
+  '  })',
+  '',
+  '  if (result.isErr()) {',
+  '    return NextResponse.json({ error: "Error al obtener estadisticas" }, { status: 500 })',
+  '  }',
+  '}',
+];
+
+const fastyCode = [
+  'fn parse_wait_flag(arg: &str) -> Option<u64> {',
+  '    if arg == "--wait" {',
+  '        return Some(10);',
+  '    }',
+  '    arg.strip_prefix("--wait=")?.parse().ok()',
+  '}',
+];
+---
+
+<section id="projects" class="scroll-mt-24 border-t border-zinc-800/60 py-28">
+  <div class="mx-auto max-w-6xl px-6">
+    <h2 class="font-mono text-3xl font-semibold tracking-tight text-zinc-50" data-reveal>
+      {title}
+    </h2>
+
+    <article class="mt-16 grid items-center gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5" data-reveal>
+        <h3 class="font-mono text-2xl font-semibold tracking-tight text-zinc-50">
+          {biovity.name}
+        </h3>
+        <p class="mt-2 font-mono text-xs text-zinc-500">{biovity.meta}</p>
+        <p class="mt-5 max-w-[55ch] leading-relaxed text-zinc-400">{biovity.description}</p>
+        <a
+          href={biovity.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-6 inline-flex items-center gap-2 font-mono text-sm text-zinc-300 transition hover:text-accent"
+        >
+          <span class="icon" set:html={GithubLogo} />
+          {viewSource}
+          <span class="icon" set:html={ArrowUpRight} />
+        </a>
+      </div>
+      <div class="lg:col-span-7" data-reveal style="--reveal-delay: 120ms">
+        <div class="border border-zinc-800 bg-zinc-900/40">
+          <div class="border-b border-zinc-800 px-4 py-2">
+            <p class="font-mono text-xs text-zinc-500">{biovity.file}</p>
+          </div>
+          <pre
+            class="overflow-x-auto px-4 py-4 font-mono text-[13px] leading-relaxed text-zinc-300"><code>{biovityCode.join("\n")}</code></pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="mt-24 grid items-center gap-10 lg:grid-cols-12">
+      <div class="order-2 lg:order-1 lg:col-span-7" data-reveal>
+        <div class="border border-zinc-800 bg-zinc-900/40">
+          <div class="border-b border-zinc-800 px-4 py-2">
+            <p class="font-mono text-xs text-zinc-500">{fasty.file}</p>
+          </div>
+          <pre
+            class="overflow-x-auto px-4 py-4 font-mono text-[13px] leading-relaxed text-zinc-300"><code>{fastyCode.join("\n")}</code></pre>
+        </div>
+      </div>
+      <div class="order-1 lg:order-2 lg:col-span-5" data-reveal style="--reveal-delay: 120ms">
+        <h3 class="font-mono text-2xl font-semibold tracking-tight text-zinc-50">{fasty.name}</h3>
+        <p class="mt-2 font-mono text-xs text-zinc-500">{fasty.meta}</p>
+        <p class="mt-5 max-w-[55ch] leading-relaxed text-zinc-400">{fasty.description}</p>
+        <a
+          href={fasty.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-6 inline-flex items-center gap-2 font-mono text-sm text-zinc-300 transition hover:text-accent"
+        >
+          <span class="icon" set:html={GithubLogo} />
+          {viewSource}
+          <span class="icon" set:html={ArrowUpRight} />
+        </a>
+      </div>
+    </article>
+
+    <div class="mt-24 grid gap-6 md:grid-cols-5">
+      <article class="border border-zinc-800 p-6 transition hover:border-zinc-600 md:col-span-3" data-reveal>
+        <h3 class="font-mono text-lg font-semibold tracking-tight text-zinc-50">
+          {portmanager.name}
+        </h3>
+        <p class="mt-2 font-mono text-xs text-zinc-500">{portmanager.meta}</p>
+        <p class="mt-4 leading-relaxed text-zinc-400">{portmanager.description}</p>
+        <a
+          href={portmanager.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-5 inline-flex items-center gap-2 font-mono text-sm text-zinc-300 transition hover:text-accent"
+        >
+          <span class="icon" set:html={GithubLogo} />
+          {viewSource}
+          <span class="icon" set:html={ArrowUpRight} />
+        </a>
+      </article>
+      <article class="border border-zinc-800 p-6 transition hover:border-zinc-600 md:col-span-2" data-reveal style="--reveal-delay: 100ms">
+        <h3 class="font-mono text-lg font-semibold tracking-tight text-zinc-50">{churn.name}</h3>
+        <p class="mt-2 font-mono text-xs text-zinc-500">{churn.meta}</p>
+        <p class="mt-4 leading-relaxed text-zinc-400">{churn.description}</p>
+        <a
+          href={churn.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-5 inline-flex items-center gap-2 font-mono text-sm text-zinc-300 transition hover:text-accent"
+        >
+          <span class="icon" set:html={GithubLogo} />
+          {viewSource}
+          <span class="icon" set:html={ArrowUpRight} />
+        </a>
+      </article>
+    </div>
+  </div>
+</section>

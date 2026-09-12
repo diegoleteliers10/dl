@@ -1,0 +1,210 @@
+---
+import FileArrowDown from "@phosphor-icons/core/assets/regular/file-arrow-down.svg?raw";
+import ArrowDown from "@phosphor-icons/core/assets/regular/arrow-down.svg?raw";
+
+interface ShellStrings {
+  help: string;
+  helpTip: string;
+  whoami: string;
+  ls: string;
+  jump: (to: string) => string;
+  sudo: string;
+  notFound: (cmd: string) => string;
+}
+
+interface Props {
+  name: string;
+  sub: string;
+  boot: { cmd: string; out: string }[];
+  terminalTitle: string;
+  ctaProjects: string;
+  ctaCv: string;
+  promptHint: string;
+  shell: ShellStrings;
+}
+
+const { name, sub, boot, terminalTitle, ctaProjects, ctaCv, promptHint, shell } = Astro.props;
+---
+
+<section class="flex min-h-[100dvh] items-center pt-16 pb-16">
+  <div class="mx-auto w-full max-w-6xl px-6">
+    <div
+      id="terminal"
+      class="w-full max-w-3xl border border-zinc-800 bg-zinc-900/40"
+    >
+      <div class="border-b border-zinc-800 px-4 py-2">
+        <p class="font-mono text-xs text-zinc-500">{terminalTitle}</p>
+      </div>
+      <div id="t-body" class="cursor-text px-4 py-4 font-mono text-sm leading-relaxed">
+        {
+          boot.map((line) => (
+            <div data-group hidden>
+              <div>
+                <span class="text-accent">$</span> <span data-cmd>{line.cmd}</span>
+              </div>
+              <div data-out hidden class={line.cmd === 'cat focus.txt' ? 'text-accent' : 'text-zinc-100'}>
+                {line.out}
+              </div>
+            </div>
+          ))
+        }
+        <div id="t-history"></div>
+        <div id="t-input" hidden>
+          <span class="text-accent">$</span> <span id="t-cmd"></span><span class="t-cursor">▌</span>
+        </div>
+      </div>
+      <input
+        id="t-hidden"
+        type="text"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        aria-label="Terminal input"
+        class="absolute h-px w-px opacity-0"
+      />
+    </div>
+    <p class="mt-3 font-mono text-xs text-zinc-500">{promptHint}</p>
+
+    <div id="hero-body" class="hero-body mt-12">
+      <h1 class="font-mono text-5xl font-semibold tracking-tighter text-zinc-50 sm:text-7xl">
+        {name}
+      </h1>
+      <p class="mt-6 max-w-[60ch] text-lg leading-relaxed text-zinc-400">{sub}</p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a
+          href="#projects"
+          class="inline-flex items-center gap-2 bg-accent px-5 py-3 font-mono text-sm font-medium text-zinc-950 transition hover:bg-accent-strong active:scale-[0.98]"
+        >
+          <span class="icon" set:html={ArrowDown} />
+          {ctaProjects}
+        </a>
+        <a
+          href="/cv.pdf"
+          class="inline-flex items-center gap-2 border border-zinc-700 px-5 py-3 font-mono text-sm text-zinc-200 transition hover:border-accent hover:text-accent active:scale-[0.98]"
+        >
+          <span class="icon" set:html={FileArrowDown} />
+          {ctaCv}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="t-i18n" set:html={JSON.stringify(shell)} />
+
+<script>
+  const groups = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-group]"),
+  );
+  const inputLine = document.getElementById("t-input")!;
+  const heroBody = document.getElementById("hero-body")!;
+  const hiddenInput = document.getElementById("t-hidden") as HTMLInputElement;
+  const cmdSpan = document.getElementById("t-cmd")!;
+  const history = document.getElementById("t-history")!;
+  const terminalBody = document.getElementById("t-body")!;
+  const shell = JSON.parse(document.getElementById("t-i18n")!.textContent!);
+
+  const email = "dleteliersr@gmail.com";
+
+  function echo(cmd: string): void {
+    const line = document.createElement("div");
+    const prompt = document.createElement("span");
+    prompt.className = "text-accent";
+    prompt.textContent = "$";
+    line.append(prompt, " " + cmd);
+    history.appendChild(line);
+  }
+
+  function respond(text: string): void {
+    const line = document.createElement("div");
+    line.className = "text-zinc-400";
+    line.textContent = text;
+    history.appendChild(line);
+  }
+
+  function scrollTo(id: string): void {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function run(cmdRaw: string): void {
+    const cmd = cmdRaw.trim().toLowerCase();
+    if (!cmd) return;
+    echo(cmd);
+    if (cmd === "clear") {
+      history.replaceChildren();
+    } else if (cmd === "help") {
+      respond(shell.help);
+      respond(shell.helpTip);
+    } else if (cmd === "whoami") {
+      respond(shell.whoami);
+    } else if (cmd === "ls") {
+      respond(shell.ls);
+    } else if (cmd === "projects" || cmd === "about" || cmd === "contact" || cmd === "experience") {
+      respond(shell.jump(cmd));
+      scrollTo(cmd);
+    } else if (cmd === "sudo hire-me" || cmd === "sudo hire me") {
+      respond(shell.sudo);
+      window.location.href = `mailto:${email}`;
+    } else {
+      respond(shell.notFound(cmd));
+    }
+  }
+
+  hiddenInput.addEventListener("input", () => {
+    cmdSpan.textContent = hiddenInput.value;
+  });
+
+  hiddenInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      run(hiddenInput.value);
+      hiddenInput.value = "";
+      cmdSpan.textContent = "";
+    }
+  });
+
+  terminalBody.addEventListener("click", () => hiddenInput.focus());
+
+  function finishBoot(): void {
+    inputLine.hidden = false;
+    heroBody.classList.add("is-in");
+  }
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reduce) {
+    groups.forEach((group) => {
+      group.hidden = false;
+      group.querySelector("[data-out]")?.removeAttribute("hidden");
+    });
+    finishBoot();
+  } else {
+    let index = 0;
+    function typeGroup(): void {
+      if (index >= groups.length) {
+        finishBoot();
+        return;
+      }
+      const group = groups[index]!;
+      const cmdEl = group.querySelector("[data-cmd]")!;
+      const text = cmdEl.textContent ?? "";
+      cmdEl.textContent = "";
+      group.hidden = false;
+      let i = 0;
+      const tick = (): void => {
+        if (i <= text.length) {
+          cmdEl.textContent = text.slice(0, i);
+          i += 1;
+          window.setTimeout(tick, 22 + Math.random() * 28);
+        } else {
+          window.setTimeout(() => {
+            group.querySelector("[data-out]")?.removeAttribute("hidden");
+            index += 1;
+            window.setTimeout(typeGroup, 180);
+          }, 160);
+        }
+      };
+      tick();
+    }
+    typeGroup();
+  }
+</script>

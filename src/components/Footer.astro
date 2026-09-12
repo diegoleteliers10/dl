@@ -1,0 +1,15 @@
+---
+interface Props {
+  copyright: string;
+  location: string;
+}
+
+const { copyright, location } = Astro.props;
+---
+
+<footer class="border-t border-zinc-800/60 py-10">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6">
+    <p class="font-mono text-xs text-zinc-500">{copyright}</p>
+    <p class="font-mono text-xs text-zinc-500">{location}</p>
+  </div>
+</footer>
