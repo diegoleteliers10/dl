@@ -15,7 +15,7 @@ const other: Lang = lang === "en" ? "es" : "en";
     <a href={langPath[lang]} class="font-mono text-sm text-zinc-100 hover:text-accent">
       ~/diego<span class="text-accent">_$</span>
     </a>
-    <div class="flex items-center gap-6">
+    <div class="flex items-center gap-10">
       <ul class="hidden items-center gap-6 md:flex">
         <li>
           <a href="#about" class="font-mono text-sm text-zinc-400 hover:text-accent">{labels.about}</a>
@@ -30,6 +30,7 @@ const other: Lang = lang === "en" ? "es" : "en";
           <a href="#contact" class="font-mono text-sm text-zinc-400 hover:text-accent">{labels.contact}</a>
         </li>
       </ul>
+      <span class="hidden h-4 w-px bg-zinc-700 md:block" aria-hidden="true"></span>
       <div class="flex items-center gap-2 font-mono text-sm">
         {
           lang === "en" ? (

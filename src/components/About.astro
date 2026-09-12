@@ -24,14 +24,14 @@ const { title, paragraphs, fullName, location, stats, stackTitle, stack } = Astr
             ))
           }
         </div>
-        <div class="mt-10 flex items-center gap-4">
+        <div class="mt-10 flex items-start gap-4">
           <img
             src="https://github.com/diegoleteliers10.png"
             alt={fullName}
-            width="56"
-            height="56"
+            width="128"
+            height="128"
             loading="lazy"
-            class="h-14 w-14 border border-zinc-800 object-cover grayscale"
+            class="h-32 w-32 border border-zinc-800 object-cover grayscale"
           />
           <div>
             <p class="font-mono text-sm text-zinc-200">{fullName}</p>
@@ -46,7 +46,7 @@ const { title, paragraphs, fullName, location, stats, stackTitle, stack } = Astr
             stats.map((stat) => (
               <div>
                 <dt class="font-mono text-xs text-zinc-500">{stat.label}</dt>
-                <dd class="font-mono text-3xl font-semibold tracking-tight text-zinc-50">
+                <dd class="font-mono text-3xl font-semibold tracking-tight text-green-400">
                   {stat.value}
                 </dd>
               </div>

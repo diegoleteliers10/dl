@@ -9,7 +9,7 @@ export const langPath: Record<Lang, string> = {
 
 const en = {
   meta: {
-    title: "Diego Letelier | Software Engineer",
+    title: "Diego Letelier | Software & Data Engineer",
     description:
       "Software engineer in Santiago, Chile. Building Biovity and fasty. TypeScript, Rust, data.",
   },
@@ -35,9 +35,9 @@ const en = {
       helpTip: 'tip: try "sudo hire-me"',
       whoami: "diego-letelier",
       ls: "about/  projects/  experience/  contact/",
-      jump: (to: string) => `jumping to #${to}`,
+      jump: "jumping to #{to}",
       sudo: "permission granted. opening mail client...",
-      notFound: (cmd: string) => `command not found: ${cmd} (try "help")`,
+      notFound: 'command not found: {cmd} (try "help")',
     },
   },
   about: {
@@ -133,12 +133,17 @@ const en = {
       {
         role: "Industrial Civil Engineering",
         org: "Universidad del Desarrollo",
-        period: "In progress",
+        period: "2026",
       },
       {
         role: "Full Stack Web Development",
         org: "SoyHenry Bootcamp",
         period: "2022",
+      },
+      {
+        role: "Secondary School",
+        org: "Colegio del Verbo Divino",
+        period: "2004 - 2018",
       },
     ],
   },
@@ -158,7 +163,7 @@ const en = {
 
 const es: typeof en = {
   meta: {
-    title: "Diego Letelier | Ingeniero de Software",
+    title: "Diego Letelier | Software & Data Engineer",
     description:
       "Ingeniero de software en Santiago, Chile. Construyendo Biovity y fasty. TypeScript, Rust, datos.",
   },
@@ -184,9 +189,9 @@ const es: typeof en = {
       helpTip: 'tip: prueba "sudo hire-me"',
       whoami: "diego-letelier",
       ls: "about/  projects/  experience/  contact/",
-      jump: (to: string) => `saltando a #${to}`,
+      jump: "saltando a #{to}",
       sudo: "permiso concedido. abriendo cliente de correo...",
-      notFound: (cmd: string) => `comando no encontrado: ${cmd} (prueba "help")`,
+      notFound: 'comando no encontrado: {cmd} (prueba "help")',
     },
   },
   about: {
@@ -282,12 +287,17 @@ const es: typeof en = {
       {
         role: "Ingeniería Civil Industrial",
         org: "Universidad del Desarrollo",
-        period: "En curso",
+        period: "2026",
       },
       {
         role: "Desarrollo Web Full Stack",
         org: "SoyHenry Bootcamp",
         period: "2022",
+      },
+      {
+        role: "Enseñanza Media",
+        org: "Colegio del Verbo Divino",
+        period: "2004 - 2018",
       },
     ],
   },
@@ -312,5 +322,5 @@ export const email = "dleteliersr@gmail.com";
 export const links = {
   github: "https://github.com/diegoleteliers10",
   linkedin: "https://www.linkedin.com/in/diegoleteliers10",
-  cv: "/cv.pdf",
+  cv: "/CV_Diego_Letelie_ES.pdf",
 };
