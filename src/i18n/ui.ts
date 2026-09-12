@@ -66,24 +66,26 @@ const en = {
   projects: {
     title: "Projects",
     viewSource: "View source",
-    featured: "featured",
+    liveDemo: "Live demo",
     items: [
       {
         id: "biovity",
         name: "Biovity",
         meta: "TypeScript | Next.js | NestJS | Supabase",
         description:
-          "AI-powered talent platform for Chile's life sciences sector. Matching between candidates and biotech companies, with an admin panel, waitlist and analytics.",
-        file: "app/api/admin/stats/route.ts",
+          "Job board connecting scientific talent with biotech and R&D in Chile: verified openings with transparent salaries.",
+        file: "https://biovity.cl",
+        demo: "https://biovity.cl",
         link: "https://github.com/diegoleteliers10/biovity",
       },
       {
         id: "fasty",
         name: "fasty",
-        meta: "Rust | GPUI | MIT | 8 stars",
+        meta: "Rust | GPUI | v0.10.0 | 8 stars",
         description:
-          "Terminal emulator for Linux and macOS built with Rust and GPUI, Zed's UI framework. Targets Ghostty-level rendering performance.",
-        file: "src/main.rs",
+          "GPU-accelerated terminal emulator for macOS, Linux and Windows, built with Rust on GPUI. Sub-1% idle CPU and pixel-perfect rendering.",
+        file: "https://fastyterm.vercel.app",
+        demo: "https://fastyterm.vercel.app",
         link: "https://github.com/diegoleteliers10/fasty",
       },
       {
@@ -213,24 +215,26 @@ const es: typeof en = {
   projects: {
     title: "Proyectos",
     viewSource: "Ver código",
-    featured: "destacado",
+    liveDemo: "Ver demo",
     items: [
       {
         id: "biovity",
         name: "Biovity",
         meta: "TypeScript | Next.js | NestJS | Supabase",
         description:
-          "Plataforma de talento con IA para el sector de ciencias de la vida en Chile. Matching entre candidatos y empresas biotech, con panel de administración, waitlist y analíticas.",
-        file: "app/api/admin/stats/route.ts",
+          "Bolsa de trabajo que conecta talento científico con biotech e I+D en Chile: ofertas verificadas con salarios transparentes.",
+        file: "https://biovity.cl",
+        demo: "https://biovity.cl",
         link: "https://github.com/diegoleteliers10/biovity",
       },
       {
         id: "fasty",
         name: "fasty",
-        meta: "Rust | GPUI | MIT | 8 stars",
+        meta: "Rust | GPUI | v0.10.0 | 8 stars",
         description:
-          "Emulador de terminal para Linux y macOS construido con Rust y GPUI, el framework de UI de Zed. Apunta al rendimiento de renderizado de Ghostty.",
-        file: "src/main.rs",
+          "Emulador de terminal acelerado por GPU para macOS, Linux y Windows, construido con Rust sobre GPUI. CPU en reposo bajo 1% y renderizado pixel-perfect.",
+        file: "https://fastyterm.vercel.app",
+        demo: "https://fastyterm.vercel.app",
         link: "https://github.com/diegoleteliers10/fasty",
       },
       {
