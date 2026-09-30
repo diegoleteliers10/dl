@@ -11,7 +11,7 @@ const en = {
   meta: {
     title: "Diego Letelier | Software & Data Engineer",
     description:
-      "Software engineer in Santiago, Chile. Building Biovity and fasty. TypeScript, Rust, data.",
+      "Software engineer in Santiago, Chile. Building Biovity, fasty and corvo. TypeScript, Rust, data.",
   },
   nav: {
     about: "about",
@@ -26,7 +26,7 @@ const en = {
       { cmd: "cat focus.txt", out: "Software Engineer | Data | AI" },
     ],
     name: "Diego Letelier",
-    sub: "Building Biovity, an AI talent platform for life sciences, and fasty, a terminal emulator written in Rust.",
+    sub: "Building Biovity, an AI talent platform for life sciences; fasty and corvo, two native tools in Rust.",
     ctaProjects: "See projects",
     ctaCv: "Download CV",
     promptHint: 'Click the terminal and type "help"',
@@ -43,7 +43,7 @@ const en = {
   about: {
     title: "About",
     paragraphs: [
-      "Industrial civil engineer (UDD) who learned to program at the SoyHenry bootcamp in 2022 and has not stopped since. Today I build Biovity and fasty on my own time, and lead open source programs at indies.la.",
+      "Industrial civil engineer (UDD) who learned to program at the SoyHenry bootcamp in 2022 and has not stopped since. Today I build Biovity, fasty and corvo on my own time, and lead open source programs at indies.la.",
       "At Tigo Chile I work as a Marketing B2B Apprentice Analyst: SQL Server queries across business schemas, Power BI dashboards the sales team checks daily, and reporting automated with Power Automate.",
       "I like fintech, data analysis, and building products people actually use.",
     ],
@@ -53,7 +53,7 @@ const en = {
       { value: "55", label: "public repos" },
       { value: "8", label: "stars on fasty" },
       { value: "4.3k", label: "LinkedIn followers" },
-      { value: "2", label: "products in build" },
+      { value: "3", label: "products in build" },
     ],
     stackTitle: "Stack",
     stack: [
@@ -89,6 +89,16 @@ const en = {
         link: "https://github.com/diegoleteliers10/fasty",
       },
       {
+        id: "corvo",
+        name: "corvo",
+        meta: "Rust | GPUI | v0.3.0 | MIT",
+        description:
+          "Native launcher for macOS, Windows and Linux: app search, file search, clipboard, window tiling and port control in one palette. Every command compiles into the binary, no scripting runtime.",
+        file: "https://getcorvo.vercel.app",
+        demo: "https://getcorvo.vercel.app",
+        link: "https://github.com/diegoleteliers10/corvo",
+      },
+      {
         id: "portmanager",
         name: "portmanager-extension",
         meta: "TypeScript | Raycast API",
@@ -113,18 +123,27 @@ const en = {
         role: "Full Stack Engineer",
         org: "BearClaw Gaming",
         period: "Mar 2026 - Sep 2026",
+        flag: "🇺🇸",
+        logo: "bearclaw",
+        logoAlt: "BearClaw Gaming",
         description: "Contract work shipping product features end to end.",
       },
       {
         role: "Open Source Program Lead",
         org: "indies.la",
         period: "Feb 2026 - Present",
+        flag: "🇨🇱",
+        logo: "indiesla",
+        logoAlt: "indies.la",
         description: "Leading open source programs for the Chilean indie dev community.",
       },
       {
         role: "Marketing B2B Apprentice Analyst",
         org: "Tigo Chile (Millicom)",
         period: "May 2025 - Present",
+        flag: "🇨🇱",
+        logo: "tigo",
+        logoAlt: "Tigo Chile",
         description:
           "SQL Server queries across business schemas, daily-use Power BI dashboards, and reporting automated with Power Automate.",
       },
@@ -134,16 +153,22 @@ const en = {
         role: "Industrial Civil Engineering",
         org: "Universidad del Desarrollo",
         period: "2026",
+        logo: "udd",
+        logoAlt: "Universidad del Desarrollo",
       },
       {
         role: "Full Stack Web Development",
         org: "SoyHenry Bootcamp",
         period: "2022",
+        logo: "soyhenry",
+        logoAlt: "SoyHenry",
       },
       {
         role: "Secondary School",
         org: "Colegio del Verbo Divino",
         period: "2004 - 2018",
+        logo: "cvd",
+        logoAlt: "Colegio del Verbo Divino",
       },
     ],
   },
@@ -165,7 +190,7 @@ const es: typeof en = {
   meta: {
     title: "Diego Letelier | Software & Data Engineer",
     description:
-      "Ingeniero de software en Santiago, Chile. Construyendo Biovity y fasty. TypeScript, Rust, datos.",
+      "Ingeniero de software en Santiago, Chile. Construyendo Biovity, fasty y corvo. TypeScript, Rust, datos.",
   },
   nav: {
     about: "sobre-mí",
@@ -180,7 +205,7 @@ const es: typeof en = {
       { cmd: "cat focus.txt", out: "Software Engineer | Data | AI" },
     ],
     name: "Diego Letelier",
-    sub: "Construyo Biovity, una plataforma de talento con IA para ciencias de la vida, y fasty, un emulador de terminal escrito en Rust.",
+    sub: "Construyo Biovity, una plataforma de talento con IA para ciencias de la vida; fasty y corvo, dos herramientas nativas en Rust.",
     ctaProjects: "Ver proyectos",
     ctaCv: "Descargar CV",
     promptHint: 'Haz clic en la terminal y escribe "help"',
@@ -197,7 +222,7 @@ const es: typeof en = {
   about: {
     title: "Sobre mí",
     paragraphs: [
-      "Ingeniero civil industrial (UDD) que aprendió a programar en el bootcamp de SoyHenry en 2022 y no ha parado desde entonces. Hoy construyo Biovity y fasty en mi tiempo libre, y lidero programas de open source en indies.la.",
+      "Ingeniero civil industrial (UDD) que aprendió a programar en el bootcamp de SoyHenry en 2022 y no ha parado desde entonces. Hoy construyo Biovity, fasty y corvo en mi tiempo libre, y lidero programas de open source en indies.la.",
       "En Tigo Chile trabajo como Marketing B2B Apprentice Analyst: consultas SQL Server entre esquemas de negocio, dashboards en Power BI que el equipo comercial revisa a diario, y reportería automatizada con Power Automate.",
       "Me interesan las fintech, el análisis de datos y construir productos que la gente use de verdad.",
     ],
@@ -207,7 +232,7 @@ const es: typeof en = {
       { value: "55", label: "repos públicos" },
       { value: "8", label: "stars en fasty" },
       { value: "4.3k", label: "seguidores en LinkedIn" },
-      { value: "2", label: "productos en construcción" },
+      { value: "3", label: "productos en construcción" },
     ],
     stackTitle: "Stack",
     stack: [
@@ -243,6 +268,16 @@ const es: typeof en = {
         link: "https://github.com/diegoleteliers10/fasty",
       },
       {
+        id: "corvo",
+        name: "corvo",
+        meta: "Rust | GPUI | v0.3.0 | MIT",
+        description:
+          "Lanzador nativo para macOS, Windows y Linux: búsqueda de apps y archivos, portapapeles, window tiling y control de puertos en una sola paleta. Cada comando compila dentro del binario, sin runtime de scripts.",
+        file: "https://getcorvo.vercel.app",
+        demo: "https://getcorvo.vercel.app",
+        link: "https://github.com/diegoleteliers10/corvo",
+      },
+      {
         id: "portmanager",
         name: "portmanager-extension",
         meta: "TypeScript | Raycast API",
@@ -267,18 +302,27 @@ const es: typeof en = {
         role: "Full Stack Engineer",
         org: "BearClaw Gaming",
         period: "mar 2026 - sep 2026",
+        flag: "🇺🇸",
+        logo: "bearclaw",
+        logoAlt: "BearClaw Gaming",
         description: "Trabajo por contrato desarrollando features de producto de punta a punta.",
       },
       {
         role: "Open Source Program Lead",
         org: "indies.la",
         period: "feb 2026 - actualidad",
+        flag: "🇨🇱",
+        logo: "indiesla",
+        logoAlt: "indies.la",
         description: "Lidero programas de open source para la comunidad de devs indie de Chile.",
       },
       {
         role: "Marketing B2B Apprentice Analyst",
         org: "Tigo Chile (Millicom)",
         period: "may 2025 - actualidad",
+        flag: "🇨🇱",
+        logo: "tigo",
+        logoAlt: "Tigo Chile",
         description:
           "Consultas SQL Server entre esquemas de negocio, dashboards en Power BI de uso diario, y reportería automatizada con Power Automate.",
       },
@@ -288,16 +332,22 @@ const es: typeof en = {
         role: "Ingeniería Civil Industrial",
         org: "Universidad del Desarrollo",
         period: "2026",
+        logo: "udd",
+        logoAlt: "Universidad del Desarrollo",
       },
       {
         role: "Desarrollo Web Full Stack",
         org: "SoyHenry Bootcamp",
         period: "2022",
+        logo: "soyhenry",
+        logoAlt: "SoyHenry",
       },
       {
         role: "Enseñanza Media",
         org: "Colegio del Verbo Divino",
         period: "2004 - 2018",
+        logo: "cvd",
+        logoAlt: "Colegio del Verbo Divino",
       },
     ],
   },

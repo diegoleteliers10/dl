@@ -34,16 +34,13 @@ const { name, sub, boot, terminalTitle, ctaProjects, ctaCv, promptHint, shell } 
       </h1>
       <p class="mt-6 max-w-[60ch] text-lg leading-relaxed text-zinc-400">{sub}</p>
       <div class="mt-10 flex flex-wrap items-center gap-4">
-        <a
-          href="#projects"
-          class="inline-flex items-center gap-2 bg-accent px-5 py-3 font-mono text-sm font-medium text-zinc-950 transition hover:bg-accent-strong active:scale-[0.98]"
-        >
+        <a href="#projects" class="btn-primary inline-flex items-center gap-2 bg-accent px-5 py-3 font-mono text-sm font-medium text-zinc-950">
           <span class="icon" set:html={ArrowDown} />
           {ctaProjects}
         </a>
         <a
           href="/CV_Diego_Letelie_ES.pdf"
-          class="inline-flex items-center gap-2 border border-zinc-700 px-5 py-3 font-mono text-sm text-zinc-200 transition hover:border-accent hover:text-accent active:scale-[0.98]"
+          class="inline-flex items-center gap-2 border border-zinc-700 px-5 py-3 font-mono text-sm text-zinc-200 transition-[color,border-color,transform] duration-150 ease-out hover:border-accent hover:text-accent active:scale-[0.98]"
         >
           <span class="icon" set:html={FileArrowDown} />
           {ctaCv}
@@ -53,8 +50,11 @@ const { name, sub, boot, terminalTitle, ctaProjects, ctaCv, promptHint, shell } 
 
     <div class="lg:col-span-5">
       <div id="terminal" class="w-full border border-zinc-800 bg-zinc-900/40">
-        <div class="border-b border-zinc-800 px-4 py-2">
-          <p class="font-mono text-xs text-zinc-500">{terminalTitle}</p>
+        <div class="flex items-center gap-1.5 border-b border-zinc-800 px-4 py-2">
+          <span class="h-2 w-2 rounded-full bg-zinc-700" aria-hidden="true"></span>
+          <span class="h-2 w-2 rounded-full bg-zinc-700" aria-hidden="true"></span>
+          <span class="h-2 w-2 rounded-full bg-zinc-700" aria-hidden="true"></span>
+          <p class="ml-2 font-mono text-xs text-zinc-500">{terminalTitle}</p>
         </div>
         <div id="t-body" class="cursor-text px-4 py-4 font-mono text-sm leading-relaxed">
           {
@@ -89,7 +89,7 @@ const { name, sub, boot, terminalTitle, ctaProjects, ctaCv, promptHint, shell } 
   </div>
 </section>
 
-<script type="application/json" id="t-i18n" set:html={JSON.stringify(shell)} />
+<script is:inline type="application/json" id="t-i18n" set:html={JSON.stringify(shell)} />
 
 <script>
   const groups = Array.from(
@@ -101,6 +101,7 @@ const { name, sub, boot, terminalTitle, ctaProjects, ctaCv, promptHint, shell } 
   const cmdSpan = document.getElementById("t-cmd")!;
   const history = document.getElementById("t-history")!;
   const terminalBody = document.getElementById("t-body")!;
+  const terminal = document.getElementById("terminal")!;
   const shell = JSON.parse(document.getElementById("t-i18n")!.textContent!);
 
   const email = "dleteliersr@gmail.com";
@@ -109,20 +110,25 @@ const { name, sub, boot, terminalTitle, ctaProjects, ctaCv, promptHint, shell } 
     return tpl.replace(/\{(\w+)\}/g, (_, key: string) => values[key] ?? "");
   }
 
+  function emit(node: HTMLElement): void {
+    node.classList.add("t-line");
+    history.appendChild(node);
+  }
+
   function echo(cmd: string): void {
     const line = document.createElement("div");
     const prompt = document.createElement("span");
     prompt.className = "text-accent";
     prompt.textContent = "$";
     line.append(prompt, " " + cmd);
-    history.appendChild(line);
+    emit(line);
   }
 
   function respond(text: string): void {
     const line = document.createElement("div");
     line.className = "text-zinc-400";
     line.textContent = text;
-    history.appendChild(line);
+    emit(line);
   }
 
   function scrollTo(id: string): void {
@@ -166,6 +172,13 @@ const { name, sub, boot, terminalTitle, ctaProjects, ctaCv, promptHint, shell } 
   });
 
   terminalBody.addEventListener("click", () => hiddenInput.focus());
+
+  terminal.addEventListener(
+    "focusin",
+    () => terminal.classList.add("is-focused"),
+    { once: true },
+  );
+  terminal.addEventListener("focusout", () => terminal.classList.remove("is-focused"));
 
   function finishBoot(): void {
     inputLine.hidden = false;

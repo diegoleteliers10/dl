@@ -1,6 +1,4 @@
 ---
-import "@fontsource-variable/geist";
-import "@fontsource-variable/geist-mono";
 import "../styles/global.css";
 import type { Lang } from "../i18n/ui";
 
@@ -8,9 +6,10 @@ interface Props {
   lang: Lang;
   title: string;
   description: string;
+  image: string;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, image } = Astro.props;
 ---
 
 <!doctype html>
@@ -24,8 +23,23 @@ const { lang, title, description } = Astro.props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://github.com/diegoleteliers10.png" />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/geist-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/geist-mono-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <title>{title}</title>
   </head>
   <body class="bg-zinc-950 text-zinc-100 font-sans antialiased">
@@ -40,6 +54,8 @@ const { lang, title, description } = Astro.props;
     </main>
     <script>
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // scroll reveal
       const targets = document.querySelectorAll("[data-reveal]");
       if (reduce) {
         targets.forEach((el) => el.classList.add("is-revealed"));
@@ -53,10 +69,84 @@ const { lang, title, description } = Astro.props;
               }
             }
           },
-          { threshold: 0.12 },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
         );
         targets.forEach((el) => io.observe(el));
       }
+
+      // active section, for the nav
+      const sections = document.querySelectorAll<HTMLElement>("main section[id]");
+      const navLinks = new Map<string, HTMLAnchorElement>();
+      document.querySelectorAll<HTMLAnchorElement>("[data-nav]").forEach((a) => {
+        const id = a.getAttribute("data-nav");
+        if (id) navLinks.set(id, a);
+      });
+
+      if (sections.length > 0 && navLinks.size > 0) {
+        const spy = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              const link = navLinks.get(entry.target.id);
+              if (link) {
+                if (entry.isIntersecting) link.dataset.active = "true";
+                else delete link.dataset.active;
+              }
+            }
+          },
+          { rootMargin: "-45% 0px -50% 0px" },
+        );
+        sections.forEach((s) => spy.observe(s));
+      }
+
+      // header: progress bar, hide on scroll down
+      const header = document.getElementById("site-header");
+      const progress = document.getElementById("scroll-progress");
+      let lastY = window.scrollY;
+      let lastRatio = -1;
+      let ticking = false;
+      let past = false;
+      let hidden = false;
+
+      const onScroll = (): void => {
+        const y = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (progress) {
+          const ratio = max > 0 ? y / max : 0;
+          if (Math.abs(ratio - lastRatio) > 0.001) {
+            lastRatio = ratio;
+            progress.style.transform = `scaleX(${ratio})`;
+          }
+        }
+        if (header) {
+          // hysteresis on both thresholds. Without it the attribute flips on
+          // every pixel near the edge, and each flip restyles the header.
+          const nextPast = past ? y > 8 : y > 64;
+          if (nextPast !== past) {
+            past = nextPast;
+            header.dataset.past = past ? "true" : "false";
+          }
+          // only downward movement may hide; coming back needs to clear 160
+          const nextHidden = past && (hidden ? y > 160 : y > 240) && y > lastY;
+          if (nextHidden !== hidden) {
+            hidden = nextHidden;
+            header.dataset.hidden = hidden ? "true" : "false";
+          }
+        }
+        lastY = y;
+        ticking = false;
+      };
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(onScroll);
+        },
+        { passive: true },
+      );
+
+      onScroll();
     </script>
   </body>
 </html>

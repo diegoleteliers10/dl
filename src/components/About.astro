@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import avatar from "../assets/avatar.jpg";
+
 interface Props {
   title: string;
   paragraphs: string[];
@@ -10,13 +13,17 @@ interface Props {
 }
 
 const { title, paragraphs, fullName, location, stats, stackTitle, stack } = Astro.props;
+const step = 60;
+const delay = (i: number): string => `--reveal-delay:${i * step}ms`;
 ---
 
 <section id="about" class="scroll-mt-24 border-t border-zinc-800/60 py-28">
   <div class="mx-auto max-w-6xl px-6">
     <div class="grid gap-14 lg:grid-cols-12">
       <div class="lg:col-span-7" data-reveal>
-        <h2 class="font-mono text-3xl font-semibold tracking-tight text-zinc-50">{title}</h2>
+        <h2 class="section-title font-mono text-3xl font-semibold tracking-tight text-zinc-50">
+          {title}
+        </h2>
         <div class="mt-8 space-y-5">
           {
             paragraphs.map((p) => (
@@ -24,13 +31,15 @@ const { title, paragraphs, fullName, location, stats, stackTitle, stack } = Astr
             ))
           }
         </div>
-        <div class="mt-10 flex items-start gap-4">
-          <img
-            src="https://github.com/diegoleteliers10.png"
+        <div class="mt-10 flex items-center gap-4">
+          <Image
+            src={avatar}
             alt={fullName}
-            width="128"
-            height="128"
+            width={128}
+            height={128}
             loading="lazy"
+            densities={[1, 2]}
+            format="webp"
             class="h-32 w-32 border border-zinc-800 object-cover grayscale"
           />
           <div>
@@ -40,13 +49,13 @@ const { title, paragraphs, fullName, location, stats, stackTitle, stack } = Astr
         </div>
       </div>
 
-      <div class="lg:col-span-5" data-reveal style="--reveal-delay: 120ms">
+      <div class="lg:col-span-5" data-reveal style={delay(1)}>
         <dl class="grid grid-cols-2 gap-x-6 gap-y-8">
           {
-            stats.map((stat) => (
-              <div>
+            stats.map((stat, i) => (
+              <div class="reveal-child" style={delay(i + 2)}>
                 <dt class="font-mono text-xs text-zinc-500">{stat.label}</dt>
-                <dd class="font-mono text-3xl font-semibold tracking-tight text-green-400">
+                <dd class="mt-1 font-mono text-3xl font-semibold tracking-tight text-green-400">
                   {stat.value}
                 </dd>
               </div>
@@ -57,12 +66,15 @@ const { title, paragraphs, fullName, location, stats, stackTitle, stack } = Astr
         <h3 class="mt-12 font-mono text-xs uppercase tracking-widest text-zinc-500">{stackTitle}</h3>
         <div class="mt-5 space-y-5">
           {
-            stack.map((group) => (
+            stack.map((group, gi) => (
               <div>
                 <p class="font-mono text-xs text-zinc-500">{group.group}</p>
                 <ul class="mt-2 flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <li class="border border-zinc-800 px-2 py-1 font-mono text-xs text-zinc-300">
+                  {group.items.map((item, i) => (
+                    <li
+                      class="reveal-child chip border border-zinc-800 px-2 py-1 font-mono text-xs text-zinc-300"
+                      style={delay(gi * 2 + i + 1)}
+                    >
                       {item}
                     </li>
                   ))}
@@ -75,3 +87,48 @@ const { title, paragraphs, fullName, location, stats, stackTitle, stack } = Astr
     </div>
   </div>
 </section>
+
+<style>
+  .reveal-child {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 460ms var(--ease-out-expo),
+      transform 460ms var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal].is-revealed .reveal-child {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .chip {
+    transition:
+      color var(--dur-ui) ease,
+      border-color var(--dur-ui) ease,
+      background-color var(--dur-ui) ease,
+      transform 200ms var(--ease-out-expo);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .chip:hover {
+      color: var(--color-accent);
+      border-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
+      background-color: color-mix(in oklab, var(--color-accent) 7%, transparent);
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-child {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .chip:hover {
+      transform: none;
+    }
+  }
+</style>

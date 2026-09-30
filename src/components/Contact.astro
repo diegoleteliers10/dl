@@ -15,54 +15,79 @@ interface Props {
 }
 
 const { title, sub, cta, github, linkedin, cv } = Astro.props;
+const social = [
+  { href: links.github, icon: GithubLogo, label: github, external: true },
+  { href: links.linkedin, icon: LinkedinLogo, label: linkedin, external: true },
+  { href: links.cv, icon: FileArrowDown, label: cv, external: false },
+];
 ---
 
 <section id="contact" class="scroll-mt-24 border-t border-zinc-800/60 py-36">
   <div class="mx-auto max-w-6xl px-6 text-center">
     <h2
-      class="mx-auto max-w-4xl font-mono text-4xl font-semibold leading-[1.1] tracking-tighter text-zinc-50 sm:text-6xl"
+      class="section-title mx-auto max-w-4xl justify-center font-mono text-4xl font-semibold leading-[1.1] tracking-tighter text-zinc-50 sm:text-6xl"
       data-reveal
     >
       {title}
     </h2>
-    <p class="mx-auto mt-6 max-w-[55ch] leading-relaxed text-zinc-400" data-reveal style="--reveal-delay: 100ms">
+    <p
+      class="mx-auto mt-6 max-w-[55ch] leading-relaxed text-zinc-400"
+      data-reveal
+      style="--reveal-delay: 100ms"
+    >
       {sub}
     </p>
     <div class="mt-10" data-reveal style="--reveal-delay: 180ms">
       <a
         href={`mailto:${email}`}
-        class="inline-flex items-center gap-2 bg-accent px-6 py-3.5 font-mono text-sm font-medium text-zinc-950 transition hover:bg-accent-strong active:scale-[0.98]"
+        class="btn-primary inline-flex items-center gap-2 bg-accent px-6 py-3.5 font-mono text-sm font-medium text-zinc-950"
       >
         <span class="icon" set:html={EnvelopeSimple} />
         {cta}
       </a>
     </div>
-    <div class="mt-10 flex items-center justify-center gap-8" data-reveal style="--reveal-delay: 240ms">
-      <a
-        href={links.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 font-mono text-sm text-zinc-400 transition hover:text-accent"
-      >
-        <span class="icon" set:html={GithubLogo} />
-        {github}
-      </a>
-      <a
-        href={links.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 font-mono text-sm text-zinc-400 transition hover:text-accent"
-      >
-        <span class="icon" set:html={LinkedinLogo} />
-        {linkedin}
-      </a>
-      <a
-        href={links.cv}
-        class="inline-flex items-center gap-2 font-mono text-sm text-zinc-400 transition hover:text-accent"
-      >
-        <span class="icon" set:html={FileArrowDown} />
-        {cv}
-      </a>
+    <div
+      class="mt-10 flex items-center justify-center gap-8"
+      data-reveal
+      style="--reveal-delay: 240ms"
+    >
+      {
+        social.map((item) => (
+          <a
+            href={item.href}
+            target={item.external ? "_blank" : undefined}
+            rel={item.external ? "noopener noreferrer" : undefined}
+            class="social inline-flex items-center gap-2 font-mono text-sm text-zinc-400 transition-[color,transform] duration-150 ease-out hover:text-accent"
+          >
+            <span class="icon" set:html={item.icon} />
+            {item.label}
+          </a>
+        ))
+      }
     </div>
   </div>
 </section>
+
+<style>
+  @media (hover: hover) and (pointer: fine) {
+    .social:hover {
+      transform: translateY(-2px);
+    }
+
+    .social:hover .icon {
+      transform: scale(1.15);
+    }
+  }
+
+  .icon {
+    display: flex;
+    transition: transform 200ms var(--ease-out-expo);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .social:hover,
+    .social:hover .icon {
+      transform: none;
+    }
+  }
+</style>

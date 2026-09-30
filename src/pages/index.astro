@@ -1,5 +1,7 @@
 ---
+import { getImage } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import og from "../assets/og.png";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
@@ -11,9 +13,17 @@ import { ui, type Lang } from "../i18n/ui";
 
 const lang: Lang = "en";
 const t = ui[lang];
+const ogImage = await getImage({
+  src: og,
+  width: 1200,
+  height: 630,
+  format: "jpg",
+  quality: 82,
+});
+const ogUrl = new URL(ogImage.src, Astro.site).href;
 ---
 
-<Base lang={lang} title={t.meta.title} description={t.meta.description}>
+<Base lang={lang} title={t.meta.title} description={t.meta.description} image={ogUrl}>
   <Nav lang={lang} labels={t.nav} />
   <Hero
     name={t.hero.name}
